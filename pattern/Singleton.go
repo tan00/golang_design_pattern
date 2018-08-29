@@ -1,6 +1,9 @@
 package pattern
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 type Singleton interface {
 	SaySomething()
@@ -14,10 +17,12 @@ func (singleton) SaySomething() {
 }
 
 var singletonInstance Singleton
+var once sync.Once
 
 func NewSingletonInstance() Singleton {
-	if nil == singletonInstance {
+	once.Do(func() {
 		singletonInstance = &singleton{}
-	}
+	})
+
 	return singletonInstance
 }
