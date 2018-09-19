@@ -8,6 +8,21 @@ type AbstractFactory interface {
 	Produceball(balltype string) ball //生产球
 }
 
+type FactorProducer struct {
+}
+
+func (*FactorProducer) GetFactory(name string) AbstractFactory {
+	switch name {
+	case "FactoryA":
+		return new(FactoryA)
+	case "FactoryB":
+		return new(FactoryB)
+	default:
+		fmt.Println("not support Factory")
+	}
+	return nil
+}
+
 //球类
 type ball interface {
 	Play()
@@ -21,22 +36,23 @@ type basketBall struct {
 type footBall struct {
 }
 
-func (this *basketBall) Play() {
+func (*basketBall) Play() {
 	fmt.Println("basketBall.Play")
 }
-func (this *footBall) Play() {
+func (*footBall) Play() {
 	fmt.Println("footBall.Play")
 }
 
-//工厂A
+//FactoryA  可以生产 pencil basketball
 type FactoryA struct {
 }
 
-func (this *FactoryA) Producepen(pentype string) pen {
+func (*FactoryA) Producepen(pentype string) pen {
 	switch pentype {
 	case "pencil":
 		return new(pencil)
 	default:
+		fmt.Println("not support product")
 		return nil
 	}
 }
@@ -46,19 +62,21 @@ func (*FactoryA) Produceball(balltype string) ball {
 		return new(basketBall)
 
 	default:
+		fmt.Println("not support product")
 		return nil
 	}
 }
 
-//工厂B
+//FactoryB  可以生产 brush football
 type FactoryB struct {
 }
 
-func (this *FactoryB) Producepen(pentype string) pen {
+func (*FactoryB) Producepen(pentype string) pen {
 	switch pentype {
 	case "brush":
 		return new(brushPen)
 	default:
+		fmt.Println("not support product")
 		return nil
 	}
 }
@@ -67,6 +85,7 @@ func (*FactoryB) Produceball(balltype string) ball {
 	case "football":
 		return new(footBall)
 	default:
+		fmt.Println("not support product")
 		return nil
 	}
 }

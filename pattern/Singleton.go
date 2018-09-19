@@ -5,15 +5,15 @@ import (
 	"sync"
 )
 
-type Singleton interface {
+type ISingleton interface {
 	SaySomething()
 }
 
-type singleton struct {
+type Singleton struct {
 }
 
-func (singleton) SaySomething() {
-	fmt.Println("Singleton")
+func (Singleton) SaySomething() {
+	fmt.Println("Singleton.SaySomething()")
 }
 
 var singletonInstance Singleton
@@ -21,7 +21,7 @@ var once sync.Once
 
 func NewSingletonInstance() Singleton {
 	once.Do(func() {
-		singletonInstance = &singleton{}
+		singletonInstance = Singleton{}
 	})
 
 	return singletonInstance

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 
 	"./pattern"
@@ -33,30 +32,58 @@ func factory() {
 }
 
 func abstractFactory() {
-	facA := new(pattern.FactoryA)
+
+	facproducor := new(pattern.FactorProducer)
+
+	facA := facproducor.GetFactory("FactoryA")
 	facA.Producepen("pencil").Write()
+	//facA.Producepen("pen not support").Write()
 	facA.Produceball("basketball").Play()
 
-	facB := new(pattern.FactoryB)
+	facB := facproducor.GetFactory("FactoryB")
 	facB.Producepen("brush").Write()
 	facB.Produceball("football").Play()
 }
+func singleton() {
+	instance := pattern.NewSingletonInstance()
+	instance.SaySomething()
+
+	instance2 := pattern.NewSingletonInstance()
+
+	if instance != instance2 {
+		fmt.Println("singleton failed")
+	}
+}
+
+const (
+	idFactory = iota + 1
+	idAbsFactory
+	idSingleton
+)
 
 func main() {
+	var (
+		//err       error
+		idPattern int
+		menu      string
+	)
+	menu = `
+	*1. factory 
+	*2. abstract factroy
+	*3. singleton
+	*4. prototype  原型模式: 对象的复制
+	`
 
-	flag.Parse()
-	patternName := flag.Arg(0)
+	fmt.Printf("select pattern: \n %s \n ", menu)
+	fmt.Scanf("%d", &idPattern)
 
-	fmt.Println("pattern name = " + patternName)
-
-	switch patternName {
-
-	case "Factory":
+	switch idPattern {
+	case idFactory:
 		factory()
-	case "Adapter":
-		adapter()
-	case "AbstractFactory":
+	case idAbsFactory:
 		abstractFactory()
+	case idSingleton:
+		singleton()
 	}
 
 }
