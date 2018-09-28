@@ -55,10 +55,16 @@ func singleton() {
 	}
 }
 
+func builder() {
+	pattern.BuilderClient()
+}
+
 const (
 	idFactory = iota + 1
 	idAbsFactory
 	idSingleton
+	idPrototype
+	idBuilder
 )
 
 func main() {
@@ -72,6 +78,7 @@ func main() {
 	*2. abstract factroy
 	*3. singleton
 	*4. prototype  原型模式: 对象的复制
+	*5. builder 
 	`
 
 	fmt.Printf("select pattern: \n %s \n ", menu)
@@ -84,6 +91,10 @@ func main() {
 		abstractFactory()
 	case idSingleton:
 		singleton()
+	case idBuilder:
+		builder()
+	default:
+		fmt.Println("undefined function")
 	}
 
 }
