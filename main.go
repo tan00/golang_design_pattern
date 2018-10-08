@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"./pattern"
+	"github.com/tan00/golang_design_pattern/pattern"
 )
 
 // var (
