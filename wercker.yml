@@ -16,6 +16,30 @@ box: golang
 
     # - mongo
     # https://devcenter.wercker.com/administration/services/examples/mongodb/
+dev:
+ steps:
+  - setup-go-workspace:
+    package-dir: github.com/tan00/golang_design_pattern
+
+  - script:
+      name: env
+      code: env
+  - script:
+    name: got get 
+    code: |           
+            cd $WERCKER_SOURCE_DIR
+            go version 
+            export PATH=$WERCKER_SOURCE_DIR/bin:$PATH
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh 
+            echo "gopath  =  $GOPATH"           
+            $HOME/go/bin/dep  init
+            $HOME/go/bin/dep  ensure
+
+
+  - internal/watch:
+    code: go run main.go
+    reload: true     
+
 build:
   # The steps that will be executed on build
   # Steps make up the actions in your pipeline
@@ -24,22 +48,42 @@ build:
   steps:
     # Sets the go workspace and places you package
     # at the right place in the workspace tree
-    - setup-go-workspace
+    - setup-go-workspace:
+       package-dir: github.com/tan00/golang_design_pattern
+
 
     # Gets the dependencies
     - script:
-        name: go get
+        name: install dependencies
         code: |
-          go get -u
+          dep init
+          dep ensure
+          #go get -u github.com/tan00/golang_design_pattern/pattern
 
     # Build the project
     - script:
         name: go build
         code: |
-          go build ./...
+          go build 
 
     # Test the project
     - script:
         name: go test
         code: |
-          go test ./...
+          go test -v
+    - script:
+        name: copy to wercker output
+        code: |
+          cp -R ./  $(WERCKER_OUTPUT_DIR)
+
+deploy:
+  steps:
+    - internal/docker-push:
+      username: $DOCKER_USERNAME
+      password: $DOCKER_PASSWORD
+      cmd: /pipeline/source/golang_design_pattern
+      port: ""
+      tag: latest
+      repository: tan00/wercker_test1
+      registry: https://registry.hub.docker.com
+
