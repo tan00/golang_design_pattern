@@ -55,7 +55,6 @@ func singleton() {
 	}
 }
 
-//
 func builder() {
 	pattern.BuilderClient()
 }
