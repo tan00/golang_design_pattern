@@ -89,6 +89,6 @@ deploy:
       port: ""
       tag: latest
       repository: tan00/wercker_test1
-      #registry: https://registry.hub.docker.com
-      registry: https://hub.docker.com
+      registry: https://registry.hub.docker.com
+      #registry: https://hub.docker.com
 
