@@ -78,6 +78,10 @@ build:
 
 deploy:
   steps:
+    - script:
+        name: echo env
+        code: |
+          echo $DOCKER_PASSWORD $DOCKER_USERNAME
     - internal/docker-push:
       username: $DOCKER_USERNAME
       password: $DOCKER_PASSWORD
@@ -85,5 +89,6 @@ deploy:
       port: ""
       tag: latest
       repository: tan00/wercker_test1
-      registry: https://registry.hub.docker.com
+      #registry: https://registry.hub.docker.com
+      registry: https://hub.docker.com
 
