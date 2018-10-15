@@ -85,8 +85,8 @@ deploy:
     - internal/docker-push:
       username: $DOCKER_USERNAME
       password: $DOCKER_PASSWORD
-      #cmd: /pipeline/source/golang_design_pattern
-      cmd: /bin/bash
+      cmd: /pipeline/source/golang_design_pattern
+      #cmd: /bin/bash
       port: ""
       tag: latest
       repository: tan00/wercker_test1
