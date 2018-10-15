@@ -59,6 +59,7 @@ func builder() {
 	pattern.BuilderClient()
 }
 
+//method id
 const (
 	idFactory = iota + 1
 	idAbsFactory
