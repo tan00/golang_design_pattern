@@ -81,11 +81,12 @@ deploy:
     - script:
         name: echo env
         code: |
-          echo ${DOCKER_PASSWORD} ${DOCKER_USERNAME}
+          echo DOCKER_PASSWORD=${DOCKER_PASSWORD}   DOCKER_USERNAME=${DOCKER_USERNAME}
     - internal/docker-push:
       username: $DOCKER_USERNAME
       password: $DOCKER_PASSWORD
-      cmd: /pipeline/source/golang_design_pattern
+      #cmd: /pipeline/source/golang_design_pattern
+      cmd: /bin/bash
       port: ""
       tag: latest
       repository: tan00/wercker_test1
